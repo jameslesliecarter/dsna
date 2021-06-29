@@ -1,4 +1,4 @@
-function insertSort(arr) {
+function selectSort(arr) {
   for (let i = 0; i < arr.length; i ++) {
       let smallestIdx = i;
       let noSwap = true;
@@ -24,7 +24,7 @@ function test() {
 let inputs = [[2,3,1,4], [9,7,34,2,5,6], [99,98,97]];
 let outputs = [[1,2,3,4], [2,5,6,7,9,34], [97,98,99]];
 for (let i = 0; i < inputs.length; i ++) {
-    if (!looper(insertSort(inputs[i]), outputs[i])) {
+    if (!looper(selectSort(inputs[i]), outputs[i])) {
         console.log('Failure at index ', i);
     }
 }
