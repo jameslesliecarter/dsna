@@ -153,4 +153,5 @@ class singlyLinkedList {
       node = next;
     }
     return this;
+  }
 }
