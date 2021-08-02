@@ -91,11 +91,11 @@ class singlyLinkedList {
 
   insert(index, val) {
     if (index === 0) {
-      this.unshift(val);
-    } else if (index === this.length + 1) {
-      this.push(val);
+      return !! this.unshift(val);
+    } else if (index === this.length) {
+      return !! this.push(val);
     } else if (index < 0 || index > this.length + 1) {
-      return undefined;
+      return false;
     } else {
       let target = this.get(index - 1);
       let oldNext = target.next;
@@ -103,8 +103,7 @@ class singlyLinkedList {
       target.next = newNext;
       newNext.next = oldNext;
       this.length ++;
-      return newNext;
+      return true;
     }
-
   }
 }
