@@ -81,11 +81,30 @@ class singlyLinkedList {
   }
 
   set(index, val) {
-    let target = this.get(val);
+    let target = this.get(index);
     if (target) {
       target.val = val;
       return true;
     }
     return false;
+  }
+
+  insert(index, val) {
+    if (index === 0) {
+      this.unshift(val);
+    } else if (index === this.length + 1) {
+      this.push(val);
+    } else if (index < 0 || index > this.length + 1) {
+      return undefined;
+    } else {
+      let target = this.get(index - 1);
+      let oldNext = target.next;
+      let newNext = new Node(val);
+      target.next = newNext;
+      newNext.next = oldNext;
+      this.length ++;
+      return newNext;
+    }
+
   }
 }
