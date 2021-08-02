@@ -12,6 +12,7 @@ class singlyLinkedList {
     this.length = 0;
   }
 
+  // O(1)
   push(val) {
     let node = new Node(val);
     if (!this.head) {
@@ -25,6 +26,7 @@ class singlyLinkedList {
     return this;
   }
 
+  // O(n)
   pop() {
     if (!this.head) {
       return undefined;
@@ -44,6 +46,7 @@ class singlyLinkedList {
     return oldTail;
   }
 
+  // O(1)
   shift() {
     if (!this.head) {
       return undefined;
@@ -54,6 +57,7 @@ class singlyLinkedList {
     return temp;
   }
 
+  // O(n)
   unshift(val) {
     let newHead = new Node(val);
     if (!this.head) {
@@ -67,6 +71,7 @@ class singlyLinkedList {
     return this;
   }
 
+  // O(n)
   get(index) {
     if (index > this.length || index < 0) {
       return null;
@@ -80,6 +85,7 @@ class singlyLinkedList {
     return target;
   }
 
+  // O(n)
   set(index, val) {
     let target = this.get(index);
     if (target) {
@@ -89,6 +95,7 @@ class singlyLinkedList {
     return false;
   }
 
+  // O(n)
   insert(index, val) {
     if (index === 0) {
       return !! this.unshift(val);
@@ -106,4 +113,44 @@ class singlyLinkedList {
       return true;
     }
   }
+
+  // O(n)
+  remove(index) {
+    if (index < 0 || index > this.length) {
+      return false;
+    }
+    if (index === 0) {
+      return this.shift();
+    }
+    if (index === this.length - 1) {
+      return this.pop();
+    }
+    let prev = this.get(index - 1);
+    let target = this.get(index);
+    let temp = target.next;
+    prev.next = temp;
+    this.length --;
+    return target.val;
+  }
+
+  // O(n)
+  reverse() {
+    // set pointers reversing previous head and tail
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+    // vars which will be needed for temporarily holding pointers
+    let prev = null,
+        next;
+    for (let i = 0; i < this.length; i ++) {
+      // placeholder for what was next and will become prev
+      next = node.next;
+      // change the node's "next" val to what will now be its previous
+      node.next = prev;
+      // bump up the "prev" to be in line with where we will be in the loop
+      prev = node;
+      // bump up the node "forward" in the old sll, and will become the "previous" in the next iteration
+      node = next;
+    }
+    return this;
 }
