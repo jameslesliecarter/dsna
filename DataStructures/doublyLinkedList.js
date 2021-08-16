@@ -44,4 +44,21 @@ class DoublyLinkedList {
       return poppedNode;
     }
   }
+
+  shift() {
+    if (!this.head) {
+      return undefined;
+    }
+    let removedHead = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = removedHead.next;
+      removedHead.next = null;
+      this.head.prev = null;
+    }
+    this.length --;
+    return removedHead;
+  }
 }
