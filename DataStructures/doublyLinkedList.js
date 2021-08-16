@@ -80,18 +80,29 @@ class DoublyLinkedList {
 
   get(index) {
     // if index is outside of range return undefined
-    if (index < 0 || index > this.length) {
+    if (index < 0 || index >= this.length) {
       return null;
     }
     // if index is inside range
-    let count = 0;
-    let node = this.head;
-    while (count < index) {
-      node = node.next;
-      count ++;
+    if (index < this.length / 2) {
+      let count = 0;
+      let node = this.head;
+      while (count < index) {
+        node = node.next;
+        count ++;
+      }
+    } else {
+      let count = this.length - 1;
+      let node = this.tail;
+      while (count > index) {
+        node = node.prev;
+        count --;
+      }
     }
     return node;
   }
+
+
 }
 
 /*
