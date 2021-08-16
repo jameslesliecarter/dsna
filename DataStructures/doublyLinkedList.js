@@ -83,17 +83,18 @@ class DoublyLinkedList {
     if (index < 0 || index >= this.length) {
       return null;
     }
+    let node, count;
     // if index is inside range
     if (index <= this.length / 2) {
-      let count = 0;
-      let node = this.head;
+      count = 0;
+      node = this.head;
       while (count < index) {
         node = node.next;
         count ++;
       }
     } else {
-      let count = this.length - 1;
-      let node = this.tail;
+      count = this.length - 1;
+      node = this.tail;
       while (count > index) {
         node = node.prev;
         count --;
@@ -109,6 +110,37 @@ class DoublyLinkedList {
       return true;
     }
     return false;
+  }
+
+  insert(index, val) {
+    // edge case: index out of bounds
+    if (index < 0 || index > this.length - 1) {
+      return false;
+    }
+    // edge case, index on either end of list
+    if (index === 0) {
+      return !! this.unshift(val);
+    }
+    if (index === this.length) {
+      return !! this.push(val);
+    }
+
+    // create new node with arg val
+    let insertedNode = new Node(val);
+    // get nodes at index and one before index
+    let target = this.get(index);
+    let prev = target.prev;
+    // set prev node's next to new node
+    prev.next = insertedNode;
+    // set index's node's prev to new node
+    target.prev = insertedNode;
+    // set prev/next of new node to these two nodes
+    insertedNode.prev = prev;
+    insertedNode.next = target;
+    // iterate length
+    this.length ++;
+    // return true
+    return true;
   }
 }
 
