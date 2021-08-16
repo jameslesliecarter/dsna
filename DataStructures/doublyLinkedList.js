@@ -84,7 +84,7 @@ class DoublyLinkedList {
       return null;
     }
     // if index is inside range
-    if (index < this.length / 2) {
+    if (index <= this.length / 2) {
       let count = 0;
       let node = this.head;
       while (count < index) {
@@ -102,7 +102,14 @@ class DoublyLinkedList {
     return node;
   }
 
-
+  set(index, val) {
+    let target = this.get(index);
+    if (target) {
+      target.val = val;
+      return true;
+    }
+    return false;
+  }
 }
 
 /*
