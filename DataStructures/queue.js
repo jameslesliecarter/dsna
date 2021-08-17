@@ -1,6 +1,8 @@
-class Node(val) {
-  this.val = val;
-  this.next = null;
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
 }
 
 class Queue {

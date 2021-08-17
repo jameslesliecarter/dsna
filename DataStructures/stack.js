@@ -1,7 +1,9 @@
-class Node(val) {
-  this.val = val;
-  this.next = null;
-  this.prev = null;
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+    this.prev = null;
+  }
 }
 
 class Stack {
@@ -18,6 +20,7 @@ class Stack {
       this.tail = node;
     } else {
       this.tail.next = node;
+      node.prev = this.tail;
       this.tail = node;
     }
     this.size ++;
@@ -27,6 +30,13 @@ class Stack {
   pop() {
     if (this.size === 0) {
       return null;
+    }
+    if (this.size === 1) {
+      this.size = 0;
+      let node = this.head;
+      this.head = null;
+      this.tail = null;
+      return node;
     }
     let res = this.tail;
     this.tail = this.tail.prev;
