@@ -10,7 +10,7 @@ class Queue {
     this.size = 0;
   }
 
-  push(val) {
+  enqueue(val) {
     let node = new Node(val);
     if (this.size === 0) {
       this.head = node;
@@ -23,8 +23,8 @@ class Queue {
     return this;
   }
 
-  pop() {
-    if (this.length === 0) {
+  dequeue() {
+    if (this.size === 0) {
       return null;
     }
     let res = this.head;
