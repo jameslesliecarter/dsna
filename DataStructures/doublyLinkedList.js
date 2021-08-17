@@ -142,6 +142,48 @@ class DoublyLinkedList {
     // return true
     return true;
   }
+
+  remove(index) {
+    // outside of range
+    if (index < 0 || index >= this.length) {
+      return false;
+    }
+    // zero index
+    if (index === 0) {
+      return !! this.shift();
+    }
+    // end index
+    if (index === this.length - 1) {
+      return !! this.pop();
+    }
+    // else
+    let node = this.get(index);
+    let next = node.next;
+    let prev = node.prev;
+    next.prev = prev;
+    prev.next = next;
+    node.next = null;
+    node.prev = null;
+    this.length --;
+    return true;
+  }
+
+  reverse() {
+    if (this.length < 2) {
+      return this;
+    }
+    let next = null;
+    let current = this.head;
+    this.head = this.tail;
+    this.tail = current;
+    while (current) {
+      current.prev = current.next;
+      current.next = next;
+      next = current;
+      current = current.prev;
+    }
+    return this;
+  }
 }
 
 /*
