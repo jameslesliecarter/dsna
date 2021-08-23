@@ -116,4 +116,77 @@ class BinarySearchTree {
     return result ? result : null;
   }
 
+  postOrderDFS() {
+    let vals = [];
+    let traverse = function(node) {
+      if (node.left) {
+        traverse(node.left);
+      }
+      if (node.right) {
+        traverse(node.right);
+      }
+      vals.push(node.val);
+    }
+    return vals;
+  }
+
+  postOrderDFS2(val) {
+    let traverse = function(node) {
+      if (node.left) {
+        let trav = traverse(node.left);
+        if (trav) {
+          return trav;
+        }
+      }
+      if (node.right) {
+        let trav = traverse(node.right);
+        if (trav) {
+          return trav;
+        }
+      }
+      if (node.val === val) {
+        return node;
+      }
+    }
+    let result = traverse(this.root);
+    return result ? result : null;
+  }
+
+  inOrderDFS() {
+    let vals = [];
+    let traverse = function(node) {
+      if (node.left) {
+        traverse(node.left);
+      }
+      vals.push(node.val);
+      if (node.right) {
+        traverse(node.right);
+      }
+    }
+    traverse(this.root);
+    return vals;
+  }
+
+  inOrderDFS2(val) {
+    let traverse = function(node) {
+      if (node.left) {
+        let trav = traverse(node.left)
+        if (trav) {
+          return trav;
+        }
+      }
+      if (node.val === val) {
+        return node;
+      }
+      if (node.right) {
+        let trav = traverse(node.right);
+        if (trav) {
+          return trav;
+        }
+      }
+    }
+    let result = traverse(this.root);
+    return result ? result : null;
+  }
+
 }
