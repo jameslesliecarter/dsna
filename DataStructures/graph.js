@@ -10,12 +10,11 @@ class Graph {
   }
 
   removeVertex(val) {
-    delete this.adjacencyList[val];
-    for (let key in this.adjacencyList) {
-      if this.adjacencyList[key].contains(val) {
-        this.adjacencyList[key].splice(this.adjacencyList[key].indexOf(val), this.adjacencyList[key].indexOf(val) + 1);
-      }
+    while (this.adjacencyList[val].length) {
+      const adjacentVertex = this.adjacencyList[val].pop();
+      this.removeEdge(val, adjacentVertex);
     }
+    delete this.adjacencyList[val];
   }
 
   addEdge(vOne, vTwo) {
@@ -32,9 +31,35 @@ class Graph {
         !Array.isArray(this.adjacencyList[vTwo])) {
       return;
     }
-    this.adjacencyList[vOne].splice(this.adjacencyList[vOne].indexOf(vTwo), this.adjacencyList[vOne].indexOf(vTwo) + 1);
-    this.adjacencyList[vTwo].splice(this.adjacencyList[vTwo].indexOf(vOne), this.adjacencyList[vTwo].indexOf(vOne) + 1);
+    let indexOne = this.adjacencyList[vOne].index(vTwo);
+    let indexTwo = this.adjacencyList[vTwo].indexOf(vOne);
+    this.adjacencyList[vOne].splice(indexOne, indexOne + 1);
+    this.adjacencyList[vTwo].splice(indexTwo, indexTwo + 1);
 
   }
+  // depth-first finds all vertices connected to vertex given as argument
+  depthFirstRecursive(vertex) {
+    let connectedVertices = [];
+    let visitedVertices = {};
+    const traverse = (vert) => {
+      // base case
+      if (!vert) {
+        return;
+      }
+      // mark current node as visited so it can't be visited again
+      visitedVertices[vert] = true;
+      // recursive case
+      let currentList = this.adjacencyList[vert];
+      for (let i = 0; i < currentList.length; i ++) {
+        if (!visitedVertices[currentList[i]]) {
+          traverse(currentList[i]);
+        }
+      }
+      // after exiting to this level of the call stack, add "current" vertex into connected vertices
+      connectedVertices.push(vert);
 
+    }
+    traverse(vertex);
+    return connectedVertices;
+  }
 }
