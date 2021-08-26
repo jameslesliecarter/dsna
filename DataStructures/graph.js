@@ -62,4 +62,25 @@ class Graph {
     traverse(vertex);
     return connectedVertices;
   }
+
+  depthFirstIterative(vertex) {
+    let stack = [];
+    let connectedVertices = [];
+    let visitedVertices = {};
+    let adjacencyList = this.adjacencyList;
+    stack.push(vertex);
+    while (stack.length) {
+      let currentVertex = stack.pop();
+      if (!visitedVertices[currentVertex]) {
+        visitedVertices[currentVertex] = true;
+        connectedVertices.push(currentVertex);
+      }
+      adjacencyList[currentVertex].forEach( neighbor => {
+        if (!visitedVertices[neighbor]) {
+          stack.push(neighbor)
+        }
+      });
+    }
+    return connectedVertices;
+  }
 }
