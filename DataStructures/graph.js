@@ -83,4 +83,23 @@ class Graph {
     }
     return connectedVertices;
   }
+
+  breadthFirst(vertex) {
+    let connected = [];
+    let visited = {};
+    let queue = [vertex];
+    visited[vertex] = true;
+    let neighbors = this.adjacencyList;
+    while (queue.length) {
+      let current = queue.shift();
+      connected.push(current);
+      neighbors[current].forEach( neighbor => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          queue.push(neighbor);
+        }
+      })
+    }
+    return connected;
+  }
 }
