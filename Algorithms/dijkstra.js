@@ -64,8 +64,69 @@ class PriorityQueue {
       [queue[idx], queue[swap]] = [queue[swap], queue[idx]];
       idx = swap;
     }
-
-
   }
 }
 
+class Node {
+  constructor(val) {
+    this.prev = null;
+    this.next = null;
+    this.val = val;
+  }
+}
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
+  }
+
+  push(val) {
+    let node = new Node(val);
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node;
+      node.prev = this.tail;
+      this.tail = node;
+    }
+    this.length ++;
+  }
+
+  pop() {
+    if (!this.head) {
+      return null;
+    }
+    if (this.length === 1) {
+      let result = this.head;
+      this.head = null;
+      this.tail = null;
+      this.length = 0;
+      return result;
+    }
+    let poppedTail = this.tail;
+    let newTail = poppedTail.prev;
+    poppedTail.prev = null;
+    newTail.next = null;
+    this.tail = newTail;
+    this.length --;
+    return poppedTail;
+  }
+}
+
+let dijkstra = (graph, start, end) => {
+  let previous = {};
+  let visited = [];
+  let queue = new PriorityQueue();
+  queue.enqueue(start, 0);
+  let keys = Object.keys(graph.adjacencyList);
+  for (let i = 0; i < keys.length; i ++) {
+    previous[keys[i]] = null;
+    if (keys[i] !== start) {
+      queue.enqueue(keys[i], Infinity);
+    }
+  }
+
+}
