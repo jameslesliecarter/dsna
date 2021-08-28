@@ -27,7 +27,7 @@ class PriorityQueue {
     this.queue.push({val, priority});
     let currentIndex = this.queue.length - 1;
     let parentIndex = Math.floor((currentIndex - 1) / 2);
-    while (this.queue[currentIndex]?.priority > this.queue[parentIndex]?.priority) {
+    while (this.queue[currentIndex]?.priority < this.queue[parentIndex]?.priority) {
       [this.queue[currentIndex], this.queue[parentIndex]] = [this.queue[parentIndex], this.queue[currentIndex]];
       currentIndex = parentIndex;
       parentIndex = Math.floor((currentIndex - 1) / 2);
@@ -40,6 +40,7 @@ class PriorityQueue {
     return result;
   }
   sinkDown() {
+    // debugger;
     let len = this.queue.length;
     let idx = 0;
     let queue = this.queue;
@@ -114,19 +115,82 @@ class DoublyLinkedList {
     this.length --;
     return poppedTail;
   }
+
+  unshift(val) {
+    let node = new Node(val);
+    if (this.length === 0) {
+      this.head = node;
+      this.tail = node;
+      this.length = 1;
+      return this;
+    }
+    node.next = this.head;
+    this.head.prev = node;
+    this.head = node;
+    this.length ++;
+  }
 }
 
 let dijkstra = (graph, start, end) => {
+  // object describing each node's previous node with the shortest route to start node
   let previous = {};
-  let visited = [];
+  previous[start] = null;
+  // array of vertices which have been visited already
+  let visited = {};
+  // initialize object showing currently calculated distance from start
+  let localDistance = {};
+  localDistance[start] = 0;
+  // initialize priority queue
   let queue = new PriorityQueue();
+  // initialize doubly linked list for return value
+  let path = new DoublyLinkedList();
+  // enqueue start node
   queue.enqueue(start, 0);
-  let keys = Object.keys(graph.adjacencyList);
-  for (let i = 0; i < keys.length; i ++) {
-    previous[keys[i]] = null;
-    if (keys[i] !== start) {
-      queue.enqueue(keys[i], Infinity);
+
+  // while the queue has vertices in it
+  while (queue.queue.length) {
+    // debugger;
+    // take highest priority vertex
+    let currentVertex = queue.dequeue();
+    // if this vertex is the endpoint, break
+    // if (currentVertex.val === end) {
+    //   break;
+    // }
+    let list = graph.adjacencyList[currentVertex.val];
+    // iterate through it's neighbors
+    for (let i = 0; i < list.length; i++) {
+
+      // if the neighbor has not yet been visited
+      if (!visited[list[i].node]) {
+        // check distance
+        // current vertex's number stored in object plus distance from current vertex to neighbor
+        let currentSum = localDistance[currentVertex.val] + list[i].weight;
+        queue.enqueue(list[i].node, currentSum);
+        // if neighbor has entry in localD obj, check if new one is smaller
+        if (localDistance[list[i].node]) {
+          // if it is smaller, change it and change "previous" object to reflect this
+          if (localDistance[list[i].node] > currentSum) {
+            localDistance[list[i].node] = currentSum;
+            previous[list[i].node] = currentVertex.val;
+            // breaks -> queue.enqueue(list[i].node, currentSum);
+          }
+        } else {
+          // if neighbor has no entry in localD obj, add it with this new sum as value
+          localDistance[list[i].node] = currentSum;
+          previous[list[i].node] = currentVertex.val;
+        }
+        // add vertex to visited list
+      }
+      visited[currentVertex.val] = true;
     }
   }
+  let pathNode = end
+  // while current node has a previous instance in previous object
+  while (pathNode) {
+    // create node from this value and unshift it to path
+    path.unshift(pathNode);
+    pathNode = previous[pathNode];
+  }
 
+  return path;
 }
