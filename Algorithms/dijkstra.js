@@ -153,9 +153,9 @@ let dijkstra = (graph, start, end) => {
     // take highest priority vertex
     let currentVertex = queue.dequeue();
     // if this vertex is the endpoint, break
-    // if (currentVertex.val === end) {
-    //   break;
-    // }
+    if (currentVertex.val === end) {
+      break;
+    }
     let list = graph.adjacencyList[currentVertex.val];
     // iterate through it's neighbors
     for (let i = 0; i < list.length; i++) {
