@@ -7,6 +7,10 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
   return arr;
 }
 
+// three arguments: array, start index, end index
+// changes input array *in place* and returns in index at which the start value ended up
+// this means that the array now has the item which was initally at the *start* position, in the correct position
+// in the array
 function pivot(arr, start = 0, end = arr.length - 1) {
     let index = start;
     for (let i = start + 1; i <= end; i ++ ) {
