@@ -8,3 +8,10 @@ var rob = function(nums) {
   }
   return dp[nums.length + 1];
 };
+
+/*
+on line 7, the following items semantically map to:
+dp[i - 2] => maximum value as of two houses ago
+nums[i - 2] => value of "current" house
+dp[i - 1] => maximum value as of one house ago
+*/
