@@ -135,7 +135,7 @@ let dijkstra = (graph, start, end) => {
   // object describing each node's previous node with the shortest route to start node
   let previous = {};
   previous[start] = null;
-  // array of vertices which have been visited already
+  // library of vertices which have been visited already
   let visited = {};
   // initialize object showing currently calculated distance from start
   let localDistance = {};
